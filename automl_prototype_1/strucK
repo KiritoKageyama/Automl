@@ -1,0 +1,35 @@
+# Java Project Structure
+
+```
+JavaProject/
+│
+├── shared-backend/                  # Common code used by both UIs
+│   ├── algorithms/                   # Mock implementations for all algorithms (BPSO, WWO, GA, etc.)
+│   ├── data/                         # Dataset parsing (CSV, Excel, Zip), validation, cleaning
+│   ├── processing/                   # Feature selection, preprocessing, normalization
+│   ├── models/                       # Core models, result objects, feature importance
+│   ├── utils/                        # File utilities, export to CSV/PDF/JSON
+│   └── MainExecutor.java             # Entry point to trigger everything based on config
+│
+├── android-app/                     # Jetpack Compose-based mobile app
+│   └── [To be generated next]
+│
+├── desktop-app/                     # JavaFX-based desktop application
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   │   ├── app/
+│   │   │   │   │   ├── MainApp.java
+│   │   │   │   │   ├── com.example.automl_prototype_1.controller/
+│   │   │   │   │   │   └── MainController.java
+│   │   │   │   │   └── view/
+│   │   │   │   │       └── MainView.fxml
+│   │   │   └── resources/
+│   │   │       └── styles.css
+│   │   └── test/
+│   │       └── [JUnit tests if needed]
+│
+└── README.md
+```
+
+---

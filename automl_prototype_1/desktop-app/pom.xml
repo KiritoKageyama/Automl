@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- *** Parent Declaration *** -->
+    <!-- Inherits from the root pom -->
+    <parent>
+        <groupId>com.shadowtengu</groupId>
+        <artifactId>automl-prototype-parent</artifactId> <!-- Matches artifactId in root pom -->
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <!-- *** Module Coordinates *** -->
+    <artifactId>desktop-app</artifactId> <!-- Unique artifactId for this module -->
+    <name>desktop-app</name>
+    <!-- Packaging defaults to 'jar', which is correct for the runnable app -->
+
+    <dependencies>
+        <!-- *** Core Logic Dependency *** -->
+        <!-- This module NEEDS the core logic -->
+        <dependency>
+            <groupId>com.shadowtengu</groupId> <!-- Use parent/core groupId -->
+            <artifactId>automl_core</artifactId>
+            <!-- Version is inherited from parent's dependencyManagement -->
+        </dependency>
+
+        <!-- *** JavaFX Dependencies *** -->
+        <!-- Versions are inherited from parent's dependencyManagement -->
+        <dependency> <groupId>org.openjfx</groupId> <artifactId>javafx-controls</artifactId> </dependency>
+        <dependency> <groupId>org.openjfx</groupId> <artifactId>javafx-fxml</artifactId> </dependency>
+        <dependency> <groupId>org.openjfx</groupId> <artifactId>javafx-web</artifactId> <classifier>${javafx.platform}</classifier> </dependency>
+        <dependency> <groupId>org.openjfx</groupId> <artifactId>javafx-swing</artifactId> </dependency>
+        <!-- No javafx-concurrent needed here if required by core -->
+
+        <!-- *** Other UI/Desktop Specific Dependencies *** -->
+        <!-- Versions are inherited -->
+        <dependency> <groupId>org.controlsfx</groupId> <artifactId>controlsfx</artifactId> </dependency>
+        <dependency> <groupId>com.dlsc.formsfx</groupId> <artifactId>formsfx-core</artifactId> <exclusions> <exclusion> <groupId>org.openjfx</groupId> <artifactId>*</artifactId> </exclusion> </exclusions> </dependency>
+        <dependency> <groupId>net.synedra</groupId> <artifactId>validatorfx</artifactId> <exclusions> <exclusion> <groupId>org.openjfx</groupId> <artifactId>*</artifactId> </exclusion> </exclusions> </dependency>
+        <dependency> <groupId>org.kordamp.ikonli</groupId> <artifactId>ikonli-javafx</artifactId> </dependency>
+        <dependency> <groupId>org.kordamp.ikonli</groupId> <artifactId>ikonli-fontawesome5-pack</artifactId> </dependency>
+        <dependency> <groupId>org.kordamp.bootstrapfx</groupId> <artifactId>bootstrapfx-core</artifactId> <exclusions> <exclusion> <groupId>org.openjfx</groupId> <artifactId>*</artifactId> </exclusion> </exclusions> </dependency>
+        <dependency> <groupId>eu.hansolo</groupId> <artifactId>tilesfx</artifactId> <exclusions> <exclusion> <groupId>org.openjfx</groupId> <artifactId>*</artifactId> </exclusion> </exclusions> </dependency>
+        <dependency> <groupId>com.github.almasb</groupId> <artifactId>fxgl</artifactId> <exclusions> <exclusion> <groupId>org.openjfx</groupId> <artifactId>*</artifactId> </exclusion> </exclusions> </dependency>
+        <dependency> <groupId>eu.hansolo.fx</groupId> <artifactId>countries</artifactId> <exclusions> <exclusion> <groupId>org.openjfx</groupId> <artifactId>*</artifactId> </exclusion> </exclusions> </dependency>
+        <dependency> <groupId>eu.hansolo.fx</groupId> <artifactId>heatmap</artifactId> <exclusions> <exclusion> <groupId>org.openjfx</groupId> <artifactId>*</artifactId> </exclusion> </exclusions> </dependency>
+        <dependency> <groupId>eu.hansolo</groupId> <artifactId>toolboxfx</artifactId> <exclusions> <exclusion> <groupId>org.openjfx</groupId> <artifactId>*</artifactId> </exclusion> </exclusions> </dependency>
+        <dependency> <groupId>eu.hansolo</groupId> <artifactId>toolbox</artifactId> <exclusions> <exclusion> <groupId>org.openjfx</groupId> <artifactId>*</artifactId> </exclusion> </exclusions> </dependency>
+
+        <!-- Jackson for UI-driven Export/Save (Version inherited) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.2</version> <!-- Use a recent, compatible version -->
+        </dependency>
+        <!-- These might be pulled in transitively by databind, but explicit is okay too -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+        <!-- SLF4J Simple Binding for Runtime Logging (Version inherited) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>runtime</scope> <!-- Only needed when running this app -->
+        </dependency>
+
+
+        <!-- Testing Dependencies (Scope inherited) -->
+        <dependency> <groupId>org.junit.jupiter</groupId> <artifactId>junit-jupiter-api</artifactId> <scope>test</scope> </dependency>
+        <dependency> <groupId>org.junit.jupiter</groupId> <artifactId>junit-jupiter-engine</artifactId> <scope>test</scope> </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Compiler plugin configuration is inherited from parent -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <!-- Surefire plugin configuration is inherited -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+
+            <!-- *** JavaFX Plugin Configuration (Specific to this module) *** -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <!-- Version is inherited from parent's pluginManagement -->
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <configuration>
+                            <!-- IMPORTANT: Verify this path matches the location AFTER moving -->
+                            <mainClass>com.example.automl_prototype_1/com.example.automl_prototype_1.DashboardApplication</mainClass>
+                            <launcher>app</launcher>
+                            <jlinkZipName>app</jlinkZipName>
+                            <jlinkImageName>app</jlinkImageName>
+                            <noManPages>true</noManPages>
+                            <stripDebug>true</stripDebug>
+                            <noHeaderFiles>true</noHeaderFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Other desktop-specific plugins could go here -->
+        </plugins>
+    </build>
+
+</project>

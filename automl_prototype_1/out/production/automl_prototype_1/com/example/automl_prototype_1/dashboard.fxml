@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:controller="com.example.automl_prototype_1.controller.DashboardController"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@..\css\dashboard.css"
+            prefWidth="900" prefHeight="600">
+
+    <!-- Sidebar -->
+    <left>
+        <VBox spacing="15" padding="20" style="-fx-background-color: #2C3E50;" prefWidth="200">
+            <Label text="AutoML" style="-fx-text-fill: white; -fx-font-size: 24px;" />
+
+            <Button text="Upload Dataset" fx:id="uploadBtn" styleClass="nav-button"/>
+            <Button text="Select Algorithm" fx:id="algoBtn" styleClass="nav-button"/>
+            <Button text="Run Model" fx:id="runBtn" styleClass="nav-button"/>
+            <Button text="View Results" fx:id="resultsBtn" styleClass="nav-button"/>
+            <Button text="Settings" fx:id="settingsBtn" styleClass="nav-button"/>
+
+            <VBox vgrow="always"/>
+            <Button text="Exit" onAction="#onExitClicked" styleClass="nav-button"/>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <StackPane fx:id="mainContent" padding="20" style="-fx-background-color: #ECF0F1;">
+            <Label text="Welcome to AutoML Dashboard" style="-fx-font-size: 18px;" />
+        </StackPane>
+    </center>
+</BorderPane>

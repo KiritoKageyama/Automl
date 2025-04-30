@@ -1,0 +1,11 @@
+.nav-button {
+    -fx-background-color: #34495E;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-pref-width: 160px;
+}
+
+.nav-button:hover {
+    -fx-background-color: #1ABC9C;
+    -fx-text-fill: black;
+}

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.shadowtengu</groupId>
+    <artifactId>automl-prototype-parent</artifactId> <!-- RENAMED ArtifactId to reflect parent role -->
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging> <!-- **** CHANGED packaging to pom **** -->
+
+    <name>automl-prototype (Parent)</name>
+
+    <modules>
+        <module>automl_core</module>        <!-- **** ADDED Module **** -->
+        <module>desktop-app</module>        <!-- **** ADDED Module (assuming you rename original dir) **** -->
+        <!-- Android module is NOT listed here - it uses Gradle -->
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>17</maven.compiler.release> <!-- Base Java level, modules can override -->
+        <!-- Define ALL common versions here -->
+        <javafx.version>21.0.2</javafx.version>
+        <javafx.platform>win</javafx.platform> <!-- Default platform -->
+        <smile.version>2.6.0</smile.version>
+        <junit.version>5.10.2</junit.version>
+        <controlsfx.version>11.1.2</controlsfx.version>
+        <formsfx.version>11.6.0</formsfx.version>
+        <validatorfx.version>0.4.0</validatorfx.version>
+        <kordamp.ikonli.version>12.3.1</kordamp.ikonli.version>
+        <bootstrapfx.version>0.4.0</bootstrapfx.version>
+        <tilesfx.version>17.1.17</tilesfx.version>
+        <fxgl.version>17.3</fxgl.version>
+        <commons.csv.version>1.10.0</commons.csv.version>
+        <jackson.version>2.14.2</jackson.version>
+        <slf4j.version>1.7.36</slf4j.version>
+        <!-- Hansolo Transitive Versions -->
+        <hansolo.countries.version>17.0.23</hansolo.countries.version>
+        <hansolo.heatmap.version>17.0.12</hansolo.heatmap.version>
+        <hansolo.toolboxfx.version>17.0.33</hansolo.toolboxfx.version>
+        <hansolo.toolbox.version>17.0.47</hansolo.toolbox.version>
+        <!-- Plugin Versions -->
+        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+        <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+        <!-- Add others as needed -->
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Define versions for all dependencies used by modules -->
+
+            <!-- Core Module Dependencies -->
+            <dependency> <groupId>com.github.haifengl</groupId> <artifactId>smile-core</artifactId> <version>${smile.version}</version> </dependency>
+            <dependency> <groupId>com.github.haifengl</groupId> <artifactId>smile-data</artifactId> <version>${smile.version}</version> </dependency>
+            <dependency> <groupId>com.github.haifengl</groupId> <artifactId>smile-io</artifactId> <version>${smile.version}</version> </dependency>
+            <dependency> <groupId>com.github.haifengl</groupId> <artifactId>smile-math</artifactId> <version>${smile.version}</version> </dependency> <!-- Re-added math, might be needed -->
+            <dependency> <groupId>org.apache.commons</groupId> <artifactId>commons-csv</artifactId> <version>${commons.csv.version}</version> </dependency>
+            <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> <version>${slf4j.version}</version> </dependency>
+
+            <!-- Desktop Module Dependencies -->
+            <dependency> <groupId>org.openjfx</groupId> <artifactId>javafx-controls</artifactId> <version>${javafx.version}</version> </dependency>
+            <dependency> <groupId>org.openjfx</groupId> <artifactId>javafx-fxml</artifactId> <version>${javafx.version}</version> </dependency>
+            <dependency> <groupId>org.openjfx</groupId> <artifactId>javafx-web</artifactId> <version>${javafx.version}</version> <classifier>${javafx.platform}</classifier> </dependency>
+            <dependency> <groupId>org.openjfx</groupId> <artifactId>javafx-swing</artifactId> <version>${javafx.version}</version> </dependency>
+            <dependency> <groupId>org.controlsfx</groupId> <artifactId>controlsfx</artifactId> <version>${controlsfx.version}</version> </dependency>
+            <dependency> <groupId>com.dlsc.formsfx</groupId> <artifactId>formsfx-core</artifactId> <version>${formsfx.version}</version> </dependency>
+            <dependency> <groupId>net.synedra</groupId> <artifactId>validatorfx</artifactId> <version>${validatorfx.version}</version> </dependency>
+            <dependency> <groupId>org.kordamp.ikonli</groupId> <artifactId>ikonli-javafx</artifactId> <version>${kordamp.ikonli.version}</version> </dependency>
+            <dependency> <groupId>org.kordamp.ikonli</groupId> <artifactId>ikonli-fontawesome5-pack</artifactId> <version>${kordamp.ikonli.version}</version> </dependency>
+            <dependency> <groupId>org.kordamp.bootstrapfx</groupId> <artifactId>bootstrapfx-core</artifactId> <version>${bootstrapfx.version}</version> </dependency>
+            <dependency> <groupId>eu.hansolo</groupId> <artifactId>tilesfx</artifactId> <version>${tilesfx.version}</version> </dependency>
+            <dependency> <groupId>com.github.almasb</groupId> <artifactId>fxgl</artifactId> <version>${fxgl.version}</version> </dependency>
+            <dependency> <groupId>eu.hansolo.fx</groupId> <artifactId>countries</artifactId> <version>${hansolo.countries.version}</version> </dependency>
+            <dependency> <groupId>eu.hansolo.fx</groupId> <artifactId>heatmap</artifactId> <version>${hansolo.heatmap.version}</version> </dependency>
+            <dependency> <groupId>eu.hansolo</groupId> <artifactId>toolboxfx</artifactId> <version>${hansolo.toolboxfx.version}</version> </dependency>
+            <dependency> <groupId>eu.hansolo</groupId> <artifactId>toolbox</artifactId> <version>${hansolo.toolbox.version}</version> </dependency>
+            <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> <version>${jackson.version}</version> </dependency>
+            <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-simple</artifactId> <version>${slf4j.version}</version> <scope>runtime</scope> </dependency>
+
+            <!-- Testing -->
+            <dependency> <groupId>org.junit.jupiter</groupId> <artifactId>junit-jupiter-api</artifactId> <version>${junit.version}</version> <scope>test</scope> </dependency>
+            <dependency> <groupId>org.junit.jupiter</groupId> <artifactId>junit-jupiter-engine</artifactId> <version>${junit.version}</version> <scope>test</scope> </dependency>
+
+            <!-- Dependency on core module (used by desktop-app) -->
+            <dependency>
+                <groupId>com.shadowtengu</groupId>
+                <artifactId>automl_core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Common Build Plugin Management -->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                    <configuration>
+                        <release>${maven.compiler.release}</release>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.surefire.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-maven-plugin</artifactId>
+                    <version>${javafx.maven.plugin.version}</version>
+                    <!-- Configuration specific to desktop-app will go in its pom -->
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

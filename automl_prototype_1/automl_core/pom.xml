@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- *** Parent Declaration *** -->
+    <!-- This links this module to the parent POM in the directory above -->
+    <!-- It inherits groupId, version, properties, dependencyManagement, pluginManagement -->
+    <parent>
+        <groupId>com.shadowtengu</groupId>
+        <artifactId>automl-prototype-parent</artifactId> <!-- Should match artifactId in root pom -->
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath> <!-- Path from this pom to the parent pom -->
+    </parent>
+
+    <!-- *** Module Coordinates *** -->
+    <artifactId>automl_core</artifactId> <!-- Unique artifactId for this module -->
+    <name>automl_core</name>
+    <!-- Packaging defaults to 'jar', which is correct -->
+
+    <!-- *** Core Dependencies *** -->
+    <!-- Dependencies needed ONLY by the core logic -->
+    <!-- Versions are inherited from the parent's <dependencyManagement> section -->
+    <dependencies>
+        <!-- SMILE Machine Learning Library -->
+        <dependency>
+            <groupId>com.github.haifengl</groupId>
+            <artifactId>smile-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.haifengl</groupId>
+            <artifactId>smile-data</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.haifengl</groupId>
+            <artifactId>smile-io</artifactId>
+        </dependency>
+        <!-- Re-add smile-math, as it might be needed by core directly in 2.6.0 -->
+        <dependency>
+            <groupId>com.github.haifengl</groupId>
+            <artifactId>smile-math</artifactId>
+        </dependency>
+                <!-- NOTE: smile-classification and smile-xgboost might not exist as separate
+             artifacts in 2.6.0; core might be sufficient. Add them back later
+             ONLY if you get ClassNotFoundErrors for specific classifiers. -->
+
+        <!-- Apache Commons CSV -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+        </dependency>
+
+        <!-- SLF4J API (Optional - if core classes use logging directly) -->
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+
+        <!-- Jackson (If core logic performs JSON operations, otherwise move to desktop-app) -->
+
+         <dependency>
+             <groupId>com.fasterxml.jackson.core</groupId>
+             <artifactId>jackson-databind</artifactId>
+         </dependency>
+
+        <!-- *** NO JavaFX or other UI dependencies here! *** -->
+
+        <!-- Testing Dependencies (inherited scope=test) -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope> <!-- Scope needs to be redefined in module -->
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope> <!-- Scope needs to be redefined in module -->
+        </dependency>
+
+    </dependencies>
+
+    <!-- No specific build section needed here unless you have core-specific resources/plugins -->
+    <!-- The compiler plugin configuration is inherited from the parent -->
+
+</project>
