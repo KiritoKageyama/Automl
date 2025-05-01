@@ -22,7 +22,7 @@ This repository contains the complete, ongoing development for this project.
 
 ## 3. Target Audience
 
-*   Students learning Object-Oriented Programming, Java, Machine Learning concepts, and software design principles (SE Project B1/B7).
+*   Students learning Object-Oriented Programming, Java, Machine Learning concepts, and software design principles.
 *   Researchers or practitioners needing a prototype platform to test or compare different hyperparameter optimization algorithms.
 *   Developers looking for a foundational example of integrating a Java core library with different UI frameworks (JavaFX and Android Compose).
 
