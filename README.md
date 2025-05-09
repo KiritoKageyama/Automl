@@ -1,135 +1,116 @@
-# AutoML Prototype Project
+# AutoML Prototype (OOPS Project - B1-B1-B7)
 
-## 1. Introduction / Problem Description
+## 1. Project Introduction: An Object-Oriented Approach to AutoML
 
-This project is a prototype system designed to explore, execute, and compare optimization algorithms (like Genetic Algorithms, PSO variants) for the purpose of tuning hyperparameters of base machine learning models (initially focusing on KNN via the Smile ML library).
+This project, developed for an Object-Oriented Programming course, is a prototype system for exploring automated machine learning (AutoML) tasks. It focuses on tuning hyperparameters of machine learning models (e.g., KNN using the Smile ML library) via optimization algorithms (like Genetic Algorithms).
 
-The core problem addressed is providing a foundational, cross-platform tool for users interested in applying metaheuristic optimization techniques to common machine learning tasks without needing deep expertise in every underlying algorithm. The system aims to simplify the workflow from data input to viewing comparative performance results.
+The core objective was to design and implement a system applying fundamental **Object-Oriented Programming principles** – encapsulation, inheritance, polymorphism, and abstraction – to create a modular, reusable, and understandable codebase. The project features a central Java library (`automl_core`) embodying these OOP concepts, with two distinct UI frontends (JavaFX Desktop and Android Jetpack Compose) demonstrating its use.
 
-This repository contains the complete, ongoing development for this project.
+## 2. Key OOP Concepts & Features Demonstrated
 
-## 2. Key Features and Functionalities
+*   **Encapsulation:**
+    *   Data and behavior are bundled within classes (e.g., `Dataset` managing records and headers, `ExecutionResult` holding metrics, service classes like `ExecutionService` encapsulating business logic).
+    *   Access modifiers (`private`, `public`, `protected`) are used to control visibility and protect internal state.
+*   **Inheritance:**
+    *   `AbstractMockAlgorithm` serves as a base class, with concrete mock algorithms (`MockAsoAlgorithm`, `MockIgpsoAlgorithm`, etc.) extending it to inherit common functionality and provide specific implementations.
+*   **Polymorphism:**
+    *   The `OptimizationAlgorithm` interface defines a common contract (`execute` method).
+    *   `ExecutionService` interacts with different algorithm objects through this interface, invoking the appropriate `execute` behavior based on the runtime type of the object.
+*   **Abstraction:**
+    *   Interfaces (`OptimizationAlgorithm`) and abstract classes (`AbstractMockAlgorithm`) hide complex implementation details, providing a simplified view to the client code (e.g., `ExecutionService`).
+    *   Service classes (`ExecutionService`, `CsvDataProvider`, `AppStateService`) abstract away the complexities of their respective domains.
+*   **Classes and Objects:** The entire system is built upon well-defined classes, instantiated as objects to represent entities and manage operations.
+*   **Interfaces:** Beyond custom interfaces, standard Java interfaces like `List`, `Map`, and `Reader` are extensively used.
+*   **Packages:** The codebase is organized into logical packages (`model`, `service`, `dataprovider`, `algorithm` in `automl_core`; `ui.screens`, `ui.vm` in Android) promoting modularity and preventing naming conflicts.
+*   **Exception Handling:** `try-catch` blocks are used to manage potential runtime errors like `IOException` (file operations) and custom exceptions, ensuring program robustness.
+*   **Generics:** Utilized with the Java Collections Framework (`List<ExecutionResult>`, `Map<String, String>`) for type safety and code reusability.
+*   **Collections Framework:** `ArrayList`, `List`, `Map` are fundamental for storing and managing data structures like datasets, algorithm lists, and results.
 
-*   **Cross-Platform:** Provides both a Desktop GUI (JavaFX) and a native Android GUI (Jetpack Compose).
-*   **Modular Design:** A central Java library (`automl_core`) contains reusable logic, separate from the UIs.
-*   **CSV Dataset Upload:** Allows users to select and load datasets in CSV format via native file choosers.
-*   **Algorithm Selection:** Enables users to choose one or more optimization algorithms (currently includes mock implementations and a basic Genetic Algorithm structure).
-*   **Base Model Selection:** (Desktop) Allows selection of the base ML model (e.g., KNN).
-*   **Execution Engine:** Executes the selected optimization algorithms on the loaded data using the core library logic.
-*   **Results Visualization:** Displays key performance metrics (Accuracy, AUC-ROC, Loss, Time) in a table and a basic bar chart for comparison.
-*   **Background Processing:** Utilizes background tasks (JavaFX Task, Kotlin Coroutines) to keep the UI responsive.
-*   **(Planned)** Results saving (JSON) and report exporting.
+## 3. Project Structure: A Modular OOP Design
 
-## 3. Target Audience
+The project's architecture emphasizes OOP's modularity:
 
-*   Students learning Object-Oriented Programming, Java, Machine Learning concepts, and software design principles.
-*   Researchers or practitioners needing a prototype platform to test or compare different hyperparameter optimization algorithms.
-*   Developers looking for a foundational example of integrating a Java core library with different UI frameworks (JavaFX and Android Compose).
+*   **`automl_prototype_1/automl_core/`**: The heart of the project, a platform-independent Java library showcasing OOP design. It contains:
+    *   **`model`**: Defines data structures (POJOs) like `Dataset` and `ExecutionResult`.
+    *   **`dataprovider`**: `CsvDataProvider` for loading data, encapsulating CSV parsing logic.
+    *   **`service`**: `ExecutionService` (orchestrates workflow) and `AppStateService` (simple state management).
+    *   **`algorithm`**: `OptimizationAlgorithm` interface and its concrete (mock/basic) implementations.
+*   **`automl_prototype_1/desktop-app/`**: A JavaFX desktop GUI that acts as a client to `automl_core`. Demonstrates how a UI layer can interact with the OOP-designed core.
+*   **`AutoMLAndroidApp/`**: An Android application (Kotlin & Jetpack Compose) that also acts as a client to `automl_core`, showcasing the core's reusability across different platforms and programming paradigms (OOP Java core with a more functional/declarative Kotlin UI).
 
-## 4. Technologies Used & Package Dependencies
+## 4. High-Level Workflow (Demonstrating Object Interaction)
 
-*   **Core Logic (`automl_core`):**
-    *   **Language:** Java 17+
-    *   **Build:** Apache Maven
-    *   **Modularity:** Java Platform Module System (JPMS - `module-info.java`)
-    *   **ML:** Smile ML Library (v2.6.0)
-    *   **CSV Parsing:** Apache Commons CSV
-*   **Desktop UI (`desktop-app`):**
-    *   **Language:** Java 17+
-    *   **Framework:** JavaFX 21+ (FXML, Controls, Charts)
-    *   **Build:** Apache Maven
-    *   **JSON:** Jackson Databind
-*   **Android UI (`android-app`):**
-    *   **Language:** Kotlin (v1.9.x)
-    *   **Build:** Gradle (with Kotlin DSL - `.kts`)
-    *   **UI:** Jetpack Compose (Material 3, Navigation, ViewModel v2.7.0, Lifecycle)
-    *   **APIs:** Android SDK (Target/Compile 34), Activity Result API
-    *   **Concurrency:** Kotlin Coroutines
-*   **Development:**
-    *   **IDE:** IntelliJ IDEA / Android Studio
-    *   **Version Control:** Git / GitHub
+1.  **Data Input (UI):** User selects a CSV file.
+2.  **Data Encapsulation (UI ViewModel -> Core):**
+    *   Android: `UploadViewModel` copies the file to a temporary `File`.
+    *   Desktop: `UploadViewController` gets a `File` object.
+3.  **Data Loading (Core):**
+    *   `CsvDataProvider` is instantiated. Its `loadDataset(File)` method is called.
+    *   A `Dataset` object is created, encapsulating headers and records.
+4.  **State Management (Core Service):** The reference to the `File` (Desktop/Android) or the `Dataset` object (if core was modified) is stored in the `AppStateService` singleton.
+5.  **Algorithm Selection (UI):** User selects algorithms.
+6.  **Execution (UI ViewModel -> Core Service):**
+    *   The `ExecutionService` is called.
+    *   It retrieves the `Dataset` (or loads it from the `File` reference).
+    *   It instantiates selected `OptimizationAlgorithm` objects (polymorphism).
+    *   It calls the `execute` method on each algorithm object.
+7.  **Results (Core Model -> UI):**
+    *   Each algorithm returns an `ExecutionResult` object.
+    *   `ExecutionService` collects these into a `List<ExecutionResult>`.
+    *   This list is stored in `AppStateService`.
+8.  **Display (UI):** The Results UI fetches the list from `AppStateService` and displays the metrics.
 
-*   **Major External Dependencies:** See `pom.xml` files (in root and submodules) and `AutoMLAndroidApp/app/build.gradle.kts`.
+## 5. Technologies Used (Relevant to OOP & Java)
 
-## 5. Project Structure
+*   **Language:** Java 17+ (for `automl_core` and `desktop-app`), Kotlin (for `android-app`, interoperable with Java).
+*   **Core Java Features:** Classes, Objects, Inheritance, Interfaces, Abstract Classes, Packages, Access Modifiers, Constructors, `this`/`super` keywords, Exception Handling, I/O Streams, Generics, Collections Framework.
+*   **Build Systems:** Apache Maven (for Java projects), Gradle (for Android/Kotlin).
+*   **Modularity:** Java Platform Module System (JPMS) used in `automl_core` and `desktop-app`.
+*   **External Libraries (interacting with core Java objects):** Apache Commons CSV, Smile ML.
 
-This repository follows a monorepo structure containing multiple related projects:
+## 6. Steps to Execute
 
-*   **`automl_prototype_1/`**: Contains the core Java library and the desktop application.
-    *   **`automl_core/`**: The platform-independent Java library (Maven project).
-    *   **`desktop-app/`**: The JavaFX desktop GUI (Maven project).
-    *   `pom.xml`: Parent Maven configuration.
-*   **`AutoMLAndroidApp/`**: The native Android application (Gradle project).
-*   `.gitignore`: Root ignore file for common temporary/build files.
-*   `README.md`: This file.
-
-## 6. Steps to Execute the Project
+*(This section can remain largely the same as the previous README, as it's about running the project.)*
 
 **Prerequisites:**
 
-*   JDK 17 or higher (`JAVA_HOME` set).
-*   Apache Maven.
-*   Android Studio (includes Android SDK).
-*   Git.
+*   JDK 17+, Maven, Android Studio, Git.
 
 **Setup & Build:**
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/KiritoKageyama/Automl.git
-    cd Automl
-    ```
-2.  **Build `automl_core`:** Navigate to the parent directory and run Maven install. This places the `automl_core.jar` in your local Maven repository (`~/.m2/repository`).
-    ```bash
-    cd automl_prototype_1
-    mvn clean install
-    cd ..
-    ```
-    *(Ensure this build is successful.)*
+1.  Clone: `git clone https://github.com/KiritoKageyama/Automl.git && cd Automl`
+2.  Build Core: `cd automl_prototype_1 && mvn clean install && cd ..`
 
-**Running the Desktop App:**
+**Running Desktop App:**
 
-1.  **Navigate:**
-    ```bash
-    cd automl_prototype_1/desktop-app
-    ```
-2.  **Run:**
-    ```bash
-    mvn javafx:run
-    ```
+1.  `cd automl_prototype_1/desktop-app`
+2.  `mvn javafx:run`
 
-**Running the Android App:**
+**Running Android App:**
 
-1.  **Open Project:** Open the `AutoMLAndroidApp` directory specifically in Android Studio.
-2.  **Gradle Sync:** Allow Gradle to sync. It should find `automl_core` via `mavenLocal()`.
-3.  **Select Device/Emulator:** Choose a target (API 26+).
-4.  **Run:** Click the "Run 'app'" button (▶️) in Android Studio.
+1.  Open `AutoMLAndroidApp` in Android Studio.
+2.  Sync Gradle, select device/emulator, Run 'app'.
 
-## 7. SDLC & Development Notes
+## 7. SDLC & Requirements (Focus on OOP Learning)
 
-*   **SDLC:** Developed using an **Iterative and Incremental** model.
-*   **Requirements:** Based on project goals and academic requirements (OOP principles). Evolved based on technical feasibility discovered during development.
-*   **Testing:** Primarily Manual Functional Testing and extensive logging (Logcat/System.out). Formal Unit/Integration testing is part of future scope.
-*   **Key Challenges & Solutions:** Addressed Android build configurations (PKIX, mavenLocal, SDK/Kotlin versions), Android `Uri` vs. Core `File` integration (via temp file workaround and core class null-safety fixes), UI rendering issues (deleting placeholder conflicts), core library build errors (Java syntax/logic corrections), and Desktop JSON/state issues. See project documentation/presentation for full details.
+*   **SDLC:** Iterative and Incremental model allowed for progressive application and refinement of OOP concepts.
+*   **Requirements:** Driven by the OOPS course syllabus to demonstrate understanding and application of core Java OOP features. The project evolved to tackle real-world complexities like cross-platform integration while adhering to these OOP tenets.
 
-## 8. Deployment
+## 8. Challenges & OOP Solutions
 
-This project is currently intended for local development and execution following the steps above.
+*   **Cross-Platform Data Handling:** The challenge of Android's `Uri` vs. Java's `File` was managed by encapsulating file copying logic in the Android `UploadViewModel` while ensuring the core `CsvDataProvider` and `Dataset` could still function based on `File` objects, preserving the core library's design integrity. The `Dataset` model was made robust to handle a potentially `null` source file reference.
+*   **Algorithm Variability:** The `OptimizationAlgorithm` interface and `AbstractMockAlgorithm` class allowed for different algorithms to be treated uniformly (`execute` method) by the `ExecutionService` (polymorphism and abstraction).
+*   **State Management:** The `AppStateService` (Singleton pattern) provided a simple way to share state (like the dataset file reference or results) between different parts of the application (different UI controllers/ViewModels).
 
-## 9. Future Scope
+## 9. Future Scope (From an OOP Perspective)
 
-*   Implement functional Smile ML algorithms.
-*   Add algorithm parameter configuration UI.
-*   Implement data preprocessing.
-*   Enhance error handling.
-*   Add Unit/Integration tests.
-*   Improve results visualization.
-*   Implement persistent storage.
-*   Refactor state management (Dependency Injection).
-*   Complete Desktop export/save features.
+*   **Refactor to Design Patterns:** More explicit use of patterns like Factory for algorithm creation, Strategy for different processing steps, Observer for state updates.
+*   **Enhance Abstraction:** Introduce more interfaces for services or data access to further decouple components.
+*   **Improve Encapsulation:** Review classes for any overly exposed internal state.
+*   **Comprehensive Unit Testing:** Use JUnit to test individual class responsibilities and method contracts.
 
 ## 10. Author
 
-*   Arin Bansal 
+*   Arin Bansal (OOPS Project - B1)
 
 ---
